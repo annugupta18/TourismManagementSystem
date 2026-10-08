@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | TravelWorld</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #023e8a;
+            padding: 18px 50px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: white;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            color: #ffd166;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            text-align: center;
+            padding: 45px 20px 25px;
+        }
+
+        .header h1 {
+            color: #023e8a;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        /* ================= ADD DESTINATION BUTTON ================= */
+
+        .add-destination-btn {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            background: #0077b6;
+
+            color: white;
+
+            padding: 12px 22px;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .add-destination-btn:hover {
+            background: #023e8a;
+        }
+
+        /* ================= STATISTICS ================= */
+
+        .stats-container {
+            width: 95%;
+
+            max-width: 1300px;
+
+            margin: 10px auto 30px;
+
+            display: grid;
+
+            grid-template-columns: repeat(6, 1fr);
+
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 22px 15px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            box-shadow: 0 5px 18px rgba(0,0,0,0.10);
+
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h2 {
+            color: #023e8a;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            color: #666;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            width: 95%;
+
+            max-width: 1300px;
+
+            margin: 20px auto 60px;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1000px;
+        }
+
+        th {
+            background: #0077b6;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 5px;
+
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+
+            color: #856404;
+        }
+
+        .confirmed {
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+        .cancelled {
+            background: #f8d7da;
+
+            color: #721c24;
+        }
+
+        /* ================= ACTION BUTTONS ================= */
+
+        .action-btn {
+            display: inline-block;
+
+            padding: 7px 10px;
+
+            margin: 2px;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+        .confirm-btn {
+            background: #28a745;
+        }
+
+        .confirm-btn:hover {
+            background: #218838;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+        }
+
+        .cancel-btn:hover {
+            background: #c82333;
+        }
+
+        /* ================= DELETE BUTTON ================= */
+
+        .delete-btn {
+            display: inline-block;
+
+            background: #dc3545;
+
+            color: white;
+
+            padding: 7px 12px;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #b02a37;
+        }
+
+        /* ================= NO DATA ================= */
+
+        .no-bookings {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #666;
+
+            font-size: 18px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #023e8a;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .stats-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 10px;
+
+                margin-right: 10px;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <h2>
+        🌍 TravelWorld - Admin
+    </h2>
+
+    <div>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/destinations">
+            Destinations
+        </a>
+
+        <a href="/my-bookings">
+            My Bookings
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <h1>
+        📊 Admin Dashboard
+    </h1>
+
+    <p>
+        Manage and view all customer bookings.
+    </p>
+
+    <a href="/admin/add-destination"
+       class="add-destination-btn">
+
+        ➕ Add Destination
+
+    </a>
+
+</div>
+
+
+<!-- ================= STATISTICS ================= -->
+
+<div class="stats-container">
+
+
+    <div class="stat-card">
+
+        <h2>
+            👥 {{ total_users }}
+        </h2>
+
+        <p>
+            Total Users
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h2>
+            🌍 {{ total_destinations }}
+        </h2>
+
+        <p>
+            Total Destinations
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h2>
+            📚 {{ total_bookings }}
+        </h2>
+
+        <p>
+            Total Bookings
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h2>
+            ✅ {{ confirmed }}
+        </h2>
+
+        <p>
+            Confirmed
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h2>
+            🕐 {{ pending }}
+        </h2>
+
+        <p>
+            Pending
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h2>
+            ❌ {{ cancelled }}
+        </h2>
+
+        <p>
+            Cancelled
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= ALL BOOKINGS ================= -->
+
+<div class="table-container">
+
+
+    <div class="header"
+         style="padding: 10px 20px 25px;">
+
+        <h1>
+            📋 All Customer Bookings
+        </h1>
+
+        <p>
+            View and manage all bookings made by customers.
+        </p>
+
+    </div>
+
+
+    {% if bookings %}
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Booking ID</th>
+
+                <th>User Name</th>
+
+                <th>Email</th>
+
+                <th>Destination</th>
+
+                <th>Location</th>
+
+                <th>Travel Date</th>
+
+                <th>Persons</th>
+
+                <th>Total Price</th>
+
+                <th>Booking Time</th>
+
+                <th>Status</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        {% for booking in bookings %}
+
+
+            <tr>
+
+                <td>
+                    {{ booking.id }}
+                </td>
+
+                <td>
+                    {{ booking.user_name }}
+                </td>
+
+                <td>
+                    {{ booking.email }}
+                </td>
+
+                <td>
+                    {{ booking.destination_name }}
+                </td>
+
+                <td>
+                    {{ booking.location }}
+                </td>
+
+                <td>
+                    {{ booking.travel_date }}
+                </td>
+
+                <td>
+                    {{ booking.persons }}
+                </td>
+
+                <td>
+                    ₹{{ booking.total_price }}
+                </td>
+
+                <td>
+                    {{ booking.booking_date }}
+                </td>
+
+                <td>
+
+
+                    {% if booking.status == "Pending" %}
+
+                        <span class="status pending">
+                            🕐 Pending
+                        </span>
+
+
+                    {% elif booking.status == "Confirmed" %}
+
+                        <span class="status confirmed">
+                            ✅ Confirmed
+                        </span>
+
+
+                    {% elif booking.status == "Cancelled" %}
+
+                        <span class="status cancelled">
+                            ❌ Cancelled
+                        </span>
+
+
+                    {% else %}
+
+                        <span class="status">
+                            {{ booking.status }}
+                        </span>
+
+                    {% endif %}
+
+
+                </td>
+
+
+                <!-- ================= ACTION ================= -->
+
+                <td>
+
+
+                    {% if booking.status != "Confirmed" %}
+
+                        <a
+                            href="/admin/update-booking/{{ booking.id }}/Confirmed"
+                            class="action-btn confirm-btn"
+                            onclick="return confirm('Confirm this booking?');"
+                        >
+                            ✅ Confirm
+                        </a>
+
+                    {% endif %}
+
+
+                    {% if booking.status != "Cancelled" %}
+
+                        <a
+                            href="/admin/update-booking/{{ booking.id }}/Cancelled"
+                            class="action-btn cancel-btn"
+                            onclick="return confirm('Cancel this booking?');"
+                        >
+                            ❌ Cancel
+                        </a>
+
+                    {% endif %}
+
+
+                </td>
+
+            </tr>
+
+
+        {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+
+    {% else %}
+
+
+        <div class="no-bookings">
+
+            😔 No bookings found.
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- ================= MANAGE DESTINATIONS ================= -->
+
+<div class="table-container">
+
+
+    <div class="header"
+         style="padding: 10px 20px 25px;">
+
+        <h1>
+            🌍 Manage Destinations
+        </h1>
+
+        <p>
+            Add or remove destinations from the system.
+        </p>
+
+    </div>
+
+
+    {% if destinations %}
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Destination</th>
+
+                <th>Location</th>
+
+                <th>Price</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        {% for destination in destinations %}
+
+
+            <tr>
+
+                <td>
+                    {{ destination.id }}
+                </td>
+
+                <td>
+                    {{ destination.name }}
+                </td>
+
+                <td>
+                    {{ destination.location }}
+                </td>
+
+                <td>
+                    ₹{{ destination.price }}
+                </td>
+
+                <td>
+
+                    <a
+                        href="/admin/delete-destination/{{ destination.id }}"
+                        class="delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this destination?');"
+                    >
+                        🗑️ Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+
+        {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+
+    {% else %}
+
+
+        <div class="no-bookings">
+
+            😔 No destinations found.
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        🌍 TravelWorld — Tourism Management System
+    </p>
+
+    <p>
+        © 2026 All Rights Reserved
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
+

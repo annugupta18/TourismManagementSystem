@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Destination | TravelWorld</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #023e8a;
+
+            padding: 18px 50px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: white;
+        }
+
+        nav a {
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            color: #ffd166;
+        }
+
+        /* ================= FORM CONTAINER ================= */
+
+        .container {
+            width: 90%;
+
+            max-width: 650px;
+
+            margin: 50px auto;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+        }
+
+        .container h1 {
+            text-align: center;
+
+            color: #023e8a;
+
+            margin-bottom: 10px;
+        }
+
+        .container p {
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 30px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #0077b6;
+        }
+
+        textarea {
+            height: 120px;
+
+            resize: vertical;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .btn {
+            width: 100%;
+
+            padding: 13px;
+
+            background: #0077b6;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #023e8a;
+        }
+
+        .back-btn {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #0077b6;
+
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #023e8a;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+
+            margin-top: 40px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 92%;
+
+                padding: 25px;
+            }
+
+            nav {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            nav a {
+                margin-left: 8px;
+
+                margin-right: 8px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <h2>
+        🌍 TravelWorld - Admin
+    </h2>
+
+    <div>
+
+        <a href="/admin">
+            Dashboard
+        </a>
+
+        <a href="/destinations">
+            Destinations
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= FORM ================= -->
+
+<div class="container">
+
+    <h1>
+        ➕ Add New Destination
+    </h1>
+
+    <p>
+        Enter the details of the new travel destination.
+    </p>
+
+
+    <form
+        action="/admin/add-destination"
+        method="POST"
+    >
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+            <label>
+                Destination Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Example: Goa"
+                required
+            >
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="form-group">
+
+            <label>
+                Location
+            </label>
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Example: Goa, India"
+                required
+            >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                name="description"
+                placeholder="Enter destination description..."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="form-group">
+
+            <label>
+                Image URL
+            </label>
+
+            <input
+                type="url"
+                name="image"
+                placeholder="https://example.com/image.jpg"
+            >
+
+        </div>
+
+
+        <!-- PRICE -->
+
+        <div class="form-group">
+
+            <label>
+                Price per Person (₹)
+            </label>
+
+            <input
+                type="number"
+                name="price"
+                placeholder="Example: 15000"
+                min="1"
+                required
+            >
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <button
+            type="submit"
+            class="btn"
+        >
+            ➕ Add Destination
+        </button>
+
+
+    </form>
+
+
+    <a
+        href="/admin"
+        class="back-btn"
+    >
+        ← Back to Admin Dashboard
+    </a>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        🌍 TravelWorld — Tourism Management System
+    </p>
+
+    <p>
+        © 2026 All Rights Reserved
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

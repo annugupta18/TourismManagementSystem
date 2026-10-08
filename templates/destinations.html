@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Destinations | TravelWorld</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #0077b6;
+            padding: 18px 50px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        nav h2 {
+            color: white;
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffd166;
+        }
+
+        /* ================= HEADING ================= */
+
+        .heading {
+            text-align: center;
+            padding: 55px 20px 25px;
+        }
+
+        .heading h1 {
+            color: #023e8a;
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .heading p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            padding: 30px 50px 70px;
+        }
+
+        .card {
+            background: white;
+            width: 310px;
+
+            border-radius: 12px;
+            overflow: hidden;
+
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background: #ddd;
+        }
+
+        .card-content {
+            padding: 22px;
+        }
+
+        .card h2 {
+            color: #023e8a;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: #777;
+            margin-bottom: 14px;
+            font-size: 15px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.6;
+            min-height: 50px;
+            margin-bottom: 17px;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: bold;
+            color: #ff7b00;
+            margin-bottom: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+
+            text-align: center;
+
+            background: #0077b6;
+            color: white;
+
+            padding: 12px;
+
+            text-decoration: none;
+            border-radius: 6px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #023e8a;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #023e8a;
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+            margin-top: 10px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin-left: 8px;
+                margin-right: 8px;
+                font-size: 14px;
+            }
+
+            .heading {
+                padding: 40px 20px 15px;
+            }
+
+            .heading h1 {
+                font-size: 29px;
+            }
+
+            .cards {
+                padding: 25px 20px 50px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 380px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <h2>
+        🌍 TravelWorld
+    </h2>
+
+    <div>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/destinations">
+            Destinations
+        </a>
+
+        <a href="/my-bookings">
+            My Bookings
+        </a>
+{% if session.get("role") == "admin" %}
+
+    <a href="/admin">
+        Admin Dashboard
+    </a>
+
+{% endif %}
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PAGE HEADING ================= -->
+
+<div class="heading">
+
+    <h1>
+        Explore Our Destinations 🌎
+    </h1>
+
+    <p>
+        Choose your favourite destination and plan your perfect journey.
+    </p>
+
+</div>
+
+
+<!-- ================= DESTINATION CARDS ================= -->
+
+<div class="cards">
+
+    {% for destination in destinations %}
+
+    <div class="card">
+
+        {% if destination.image %}
+
+            <img
+                src="{{ destination.image }}"
+                alt="{{ destination.name }}"
+            >
+
+        {% else %}
+
+            <img
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+                alt="{{ destination.name }}"
+            >
+
+        {% endif %}
+
+
+        <div class="card-content">
+
+            <h2>
+                {{ destination.name }}
+            </h2>
+
+            <div class="location">
+                📍 {{ destination.location }}
+            </div>
+
+            <div class="description">
+                {{ destination.description }}
+            </div>
+
+            <div class="price">
+                ₹{{ destination.price }}
+            </div>
+
+            <a
+                href="/book/{{ destination.id }}"
+                class="btn"
+            >
+                Book Now ✈️
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        🌍 TravelWorld — Tourism Management System
+    </p>
+
+    <p>
+        © 2026 All Rights Reserved
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
+

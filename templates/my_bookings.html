@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Bookings | TravelWorld</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        nav {
+            background: #0077b6;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: white;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .heading {
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
+
+        .heading h1 {
+            color: #023e8a;
+            margin-bottom: 10px;
+        }
+
+        .bookings {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            padding: 30px 50px 60px;
+        }
+
+        .booking-card {
+            background: white;
+            width: 330px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .booking-card h2 {
+            color: #0077b6;
+            margin-bottom: 10px;
+        }
+
+        .booking-card p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff7b00 !important;
+        }
+
+        .status {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+        .cancel-btn {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            background: #dc3545;
+
+            color: white;
+
+            padding: 10px 16px;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+   }
+
+    .cancel-btn:hover {
+
+    background: #b02a37;
+}
+        .no-bookings {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #666;
+        }
+
+        .back-btn {
+            display: block;
+            width: 200px;
+            margin: 0 auto 50px;
+            text-align: center;
+            background: #0077b6;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        footer {
+            background: #023e8a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<nav>
+
+    <h2>🌍 TravelWorld</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/destinations">Destinations</a>
+
+        <a href="/my-bookings">My Bookings</a>
+{% if session.get("role") == "admin" %}
+
+    <a href="/admin">
+        Admin Dashboard
+    </a>
+
+{% endif %}
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</nav>
+
+
+<div class="heading">
+
+    <h1>📋 My Bookings</h1>
+
+    <p>View all your booked trips here.</p>
+
+</div>
+
+
+<div class="bookings">
+
+    {% if bookings %}
+
+        {% for booking in bookings %}
+
+        <div class="booking-card">
+
+            <h2>{{ booking.name }}</h2>
+
+            <p>
+                📍 <strong>Location:</strong>
+                {{ booking.location }}
+            </p>
+
+            <p>
+                📅 <strong>Travel Date:</strong>
+                {{ booking.travel_date }}
+            </p>
+
+            <p>
+                👥 <strong>Persons:</strong>
+                {{ booking.persons }}
+            </p>
+
+            <p class="price">
+                💰 Total Price: ₹{{ booking.total_price }}
+            </p>
+
+            <p>
+                🕐 <strong>Booking Time:</strong>
+                {{ booking.booking_date }}
+            </p>
+
+           <p>
+    <strong>Status:</strong>
+
+    {% if booking.status == "Pending" %}
+
+        <span class="status status-pending">
+            🕐 Pending
+        </span>
+
+    {% elif booking.status == "Confirmed" %}
+
+        <span class="status status-confirmed">
+            ✅ Confirmed
+        </span>
+
+    {% elif booking.status == "Cancelled" %}
+
+        <span class="status status-cancelled">
+            ❌ Cancelled
+        </span>
+
+    {% else %}
+
+        <span class="status">
+            {{ booking.status }}
+        </span>
+
+    {% endif %}
+</p>
+
+            {% if booking.status != "Cancelled" %}
+
+            <a href="/cancel-booking/{{ booking.id }}"
+                class="cancel-btn"
+                onclick="return confirm('Are you sure you want to cancel this booking?');">
+                Cancel Booking
+            </a>
+
+        {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="no-bookings">
+
+            <p>😔 You have no bookings yet.</p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<a href="/destinations" class="back-btn">
+    Explore Destinations
+</a>
+
+
+<footer>
+
+    <p>
+        © 2026 Tourism Management System | All Rights Reserved
+    </p>
+
+</footer>
+
+</body>
+
+</html>

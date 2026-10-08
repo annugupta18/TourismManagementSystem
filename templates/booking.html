@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Your Trip | TravelWorld</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background: linear-gradient(
+                135deg,
+                #0077b6,
+                #90e0ef
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .booking-box {
+            width: 100%;
+            max-width: 550px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 8px 30px rgba(0,0,0,0.20);
+        }
+
+        h1 {
+            text-align: center;
+
+            color: #0077b6;
+
+            margin-bottom: 25px;
+        }
+
+        .destination {
+            background: #f5f7fa;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .destination h2 {
+            color: #023e8a;
+
+            margin-bottom: 10px;
+        }
+
+        .destination p {
+            color: #555;
+
+            margin: 8px 0;
+        }
+
+        .price {
+            color: #ff7b00 !important;
+
+            font-weight: bold;
+
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-top: 15px;
+
+            margin-bottom: 6px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+
+            border-color: #0077b6;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 25px;
+
+            background: #0077b6;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #023e8a;
+        }
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #0077b6;
+
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="booking-box">
+
+
+    <h1>
+        Book Your Trip ✈️
+    </h1>
+
+
+    <!-- DESTINATION DETAILS -->
+
+    <div class="destination">
+
+        <h2>
+            {{ destination.name }}
+        </h2>
+
+        <p>
+            📍 <strong>Location:</strong>
+            {{ destination.location }}
+        </p>
+
+        <p class="price">
+            💰 ₹{{ destination.price }} per person
+        </p>
+
+    </div>
+
+
+    <!-- BOOKING FORM -->
+
+    <form method="POST"
+          action="/book/{{ destination.id }}">
+
+
+        <label>
+            Travel Date
+        </label>
+
+        <input
+            type="date"
+            name="travel_date"
+            required
+        >
+
+
+        <label>
+            Number of Persons
+        </label>
+
+        <input
+            type="number"
+            name="persons"
+            min="1"
+            value="1"
+            required
+        >
+
+
+        <button type="submit">
+            Confirm Booking 🎉
+        </button>
+
+
+    </form>
+
+
+    <a
+        href="/destinations"
+        class="back"
+    >
+        ← Back to Destinations
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>
